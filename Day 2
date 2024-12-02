@@ -1,0 +1,26 @@
+-- option 1: Triggers check for numbering
+
+
+-- option 2: Data inserted clean the data
+-- convert to letters
+WITH cte AS(
+SELECT id, CHR(value) as words FROM letters_a
+WHERE 
+	value >= 65 AND value <= 90
+	OR value >= 97 AND value <= 122
+	OR value = 32
+	OR value = 44
+	OR value = 46
+	OR value = 33
+UNION
+SELECT id, CHR(value) as words FROM letters_b
+WHERE 
+	value >= 65 AND value <= 90
+	OR value >= 97 AND value <= 122
+	OR value = 32
+	OR value = 44
+	OR value = 46
+	OR value = 33
+ORDER BY id ASC)
+
+SELECT string_agg(words, '') FROM cte;
